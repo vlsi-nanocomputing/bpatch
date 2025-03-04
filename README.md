@@ -1,93 +1,178 @@
 # bpatch
+Application to generate a patch between two binary files without compression. The algorithm is based on the bash command DIFF.
+It is available a Python application to encode (generate the patch)and decode (rebuild the new firmware) options. The decode is based on a C code.
+
+**NOTE**: the os system command **diff** must be present, the python script work only on Linux 
+
+## How to configure
+It is available a script to build the C code for CPU and configure the Python script
+
+    sh configure.sh
+
+## How to use
+- encode
+    
+        python3 patch.py encode OLD_FW NEW_FW PATCH [OPTIONS]
+    
+    options:
+
+        -v         : verify che correctness of the patch
+		-V         : verify che correctness of the txt patch
+		-t FILENAME: write the patch in txt format
+		-b FILENAME: write the patch in binary format
+		-r FILENAME: write the report in txt format
+		-R FILENAME: write the report in csv format
+
+- decode
+
+        python3 patch.py decode OLD_FW PATCH NEW_FW [OPTIONS]
+
+    options:
+
+        -v     : enable verbose mode
+		-r SIZE: set the read buffer size
+		-p SIZE: set the patch buffer size
 
 
 
-## Getting started
+## How to use C code
+- usage for CPU
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+       ./bpatch <old_firmware> <patch> <new_firmware> <read_buffer_size> <patch_buffer_size>
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- usage for MCU
 
-## Add your files
+    - copy *bpatch.c* and *bpatch.h*
+    - add definition of memory functions and log function
+    - remove define **TEST_PATCH**
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## bpatch structure
+Are present two instructions: **CPY** to copy bytes from the old firmware, **ADD** to add new bytes. To save the bit to indicate the command in final patch it is assumed that the first instruction is a **CPY** then there is an alternance between **ADD** and **CPY**
 
-```
-cd existing_repo
-git remote add origin https://git.vlsilab.polito.it/the-bee-group/utilities/bpatch.git
-git branch -M main
-git push -uf origin main
-```
+- **Patch txt**
+    
+    Textual patch generated in Python, it is a temporary patch 
+    
+    CPY format:
+            
+            0, <nbd>, <nbc>
+    - 0: indicate CPY instruction
+    - nbd: number of bytes to jump in old firmware
+    - nbc: number of bytes to copy from old firmware in new firmware
 
-## Integrate with your tools
+    ADD format:
+            
+            1, <nba>, <hex[B1]>, <hex[B2]>, ... <hex[Bnba]>
+    - 1: indicate ADD instruction
+    - nba: number of bytes to add in new firmware
+    - Bn: new bytes in hex format
 
-- [ ] [Set up project integrations](https://git.vlsilab.polito.it/the-bee-group/utilities/bpatch/-/settings/integrations)
+    example of **Patch txt**
 
-## Collaborate with your team
+        0,0,8
+        1,2,30,2C​
+        0,2,6
+        1,2,30,2C​
+        0,2,2​
+        1,13,BA,11,61,AD,9A,AD,58,2B,65,61,...​
+        0,17,1​
+        1,3,19,14,38
+        [...]
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+- **Patch bin txt**
 
-## Test and Deploy
+    It is the previous patch converted in binary and saved in textual format
 
-Use the built-in continuous integration in GitLab.
+    Header format:
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+        <bin[endpatch]>
+        <bin[WNBD]>
+        <bin[WNBC]>
+        <bin[WNBA]>
 
-***
+    - endpatch: number of bits of the patch
+    - WNBD: define the number of bit reserved to \<wnbd\> field
+    - WNBC: define the number of bit reserved to \<wnbc\> field
+    - WNBA: define the number of bit reserved to \<wnba\> field
+    
+    [Optional custum fw header]
 
-# Editing this README
+    *It is possible to define a methodology to built the firmware header*
+    
+    CPY format:
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+        0, <bin[wnbd]> <bin[nbd]>, <bin[wnbc]> <bin[nbc]>
 
-## Suggestions for a good README
+    - 0: indicate CPY instruction
+    - wnbd: number of bit reserved to next \<nbd\> field
+    - nbd: number of bytes to jump in old firmware (if 0 this field is not present)
+    - wnbc: number of bit reserved to next \<nbc\> field
+    - nbc: number of bytes to copy from old firmware in new firmware
+    
+    ADD format:
+            
+            1, <bin[wnba]> <bin[nba]>, <bin[B1]>, <bin[B2]>, ... <bin[Bnba]>
+    
+    - 1: indicate ADD instruction
+    - wnba: number of bit reserved to next \<nba\> field
+    - nba: number of bytes to add in new firmware (if 0 this field is not present)
+    - Bn: new bytes in bin format
+    
+    example of **Patch bin txt**:
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+        100000111100010000001101
+        00000011
+        00000100
+        00000100
+        
+        [Custom fw header]
 
-## Name
-Choose a self-explaining name for your project.
+        0,000,0100 1000
+        1,0010 10,00110000,00101100
+        0,010 10,0011 110​
+        1,0010 10,00110000,00101100​
+        0,010 10,0010 10​
+        1,0100 1101,10111010,00010001,01100001,10101101,10011010,...​
+        0,101 10001,0001 1​
+        1,0010 11,00011001,00010100,00111000
+        [...]
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+- **Final patch**
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+    The final patch is generated by the previous patch with the first bit of each instruction line eliminated (instruction bit). The patch is written in binary format
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+## Custom header
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+It is possible to define a methodology to generate an header for the firmware.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+In *bpatch.py*:
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+- set *header_fw_size*: size of the custom header in the firmware in bytes
+- set *header_patch_size*: size of the custom header in the patch in bits
+- set *header_lines*: number of lines of the custom header in the patch
+- define *write_header_custom*: function that read the header of the firmware and produce the lines required to re-built the header in **Patch bin txt**
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+In *bpatch.h*
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+- enable MACRO *HEADER_PATCH*
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+In *bpatch.c*
 
-## License
-For open source projects, say how it is licensed.
+- define *write_header*: function to re-built header for correspondent bytes from the patch
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+
+## CSV report format
+
+Fields of CSV report:
+
+- **fw_size**: size of new firmware in bytes
+- **patch_sz**: size of patch in bytes
+- **CPY**: number of CPY instructions
+- **ADD**: number of ADD instructions
+- **NB**: number of new bytes added
+- **OVER_NBD**: number of bit necessary to NBD field compared to the total number new bytes in percentage
+- **OVER_NBC**: number of bit necessary to NBC field compared to the total number new bytes in percentage
+- **OVER_NBA**: number of bit necessary to NBA field compared to the total number new bytes in percentage
+- **OVER_TOT**: number of bit necessary to NBD, NBC, NBA fields compared to the total number new bytes in percentage

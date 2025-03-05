@@ -14,7 +14,8 @@
 /* define to indicate test on CPU */
 #define TEST_PATCH
 /* define to indicate the presence of custom header of the firmware */
-// #define HEADER_PATCH
+//#define HEADER_PATCH
+#define HEADER_SBSFU
 
 #ifdef TEST_PATCH
 /* addresses of the slots */
@@ -52,6 +53,14 @@ extern uint64_t PATCH_BUFFER_SIZE;
 #define HEADER_PATCH_SIZE <N> // size of the custom header in the patch in bits
 
 void write_header(...);
+
+#endif
+
+#ifdef HEADER_SBSFU
+
+/* defines and function for SBSFU header */
+#include "header_sbsfu.h"
+
 #endif
 
 /**

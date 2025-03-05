@@ -139,6 +139,16 @@ int bpatch(){
 	index_old += HEADER_FW_SIZE;
 #endif
 
+#ifdef HEADER_SBSFU
+	// write header
+	write_header(write_buffer, patch_buffer, patch_buffer + 4, patch_buffer + 4 + 32);
+
+	// update indexes
+	index_write += HEADER_FW_SIZE;
+	index_buffer += HEADER_PATCH_SIZE;
+	index_old += HEADER_FW_SIZE;
+#endif
+
 	// cycle until end of patch
 	while ((index_patch * 8 - (PATCH_BUFFER_SIZE * 8) + index_buffer) < endpatch) {
 

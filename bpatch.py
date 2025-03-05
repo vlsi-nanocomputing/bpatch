@@ -4,16 +4,18 @@ from math import log, ceil
 import sys
 import os
 from path_bpatch import path_patch_exec
-import time
+
+# enable custom header
+header_custom = True
+from header_sbsfu import header_fw_size, header_patch_size, header_lines, write_header_custom
 
 """ Custom Header definition start """
+if not header_custom:
+    header_fw_size    = 0   # size of the custom header in the firmware in bytes
+    header_patch_size = 0   # size of the custom header in the patch in bits
+    header_lines      = 0   # number of lines of the custom header in the patch
 
-header_fw_size    = 0   # size of the custom header in the firmware in bytes
-header_patch_size = 0   # size of the custom header in the patch in bits
-header_lines      = 0   # number of lines of the custom header in the patch 
-
-write_header_custom = None  # custom header disabled
-
+    write_header_custom = None  # custom header disabled
 """
 # function to build header for txt patch
 def write_header_custom(bin_txt):
@@ -609,7 +611,7 @@ if __name__ == '__main__':
         generate_hex_fw(old_fw, "old_fw.tmp", "old_fw_header.tmp", header_fw_size)
         generate_hex_fw(new_fw, "new_fw.tmp", "new_fw_header.tmp", header_fw_size)
         to_remove.extend(["old_fw.tmp", "new_fw.tmp"])
-        if write_header_custom:
+        if header_custom:
             to_remove.extend(["old_fw_header.tmp", "new_fw_header.tmp"])
         # compute diff
         os.system("diff old_fw.tmp new_fw.tmp > diff.tmp")

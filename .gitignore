@@ -2,5 +2,6 @@ build/
 
 .vscode/
 __pycache__/
+.idea/
 
 path_bpatch.py

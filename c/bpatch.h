@@ -15,7 +15,7 @@
 #define TEST_PATCH
 /* define to indicate the presence of custom header of the firmware */
 //#define HEADER_PATCH
-#define HEADER_SBSFU
+//#define HEADER_SBSFU
 
 #ifdef TEST_PATCH
 /* addresses of the slots */

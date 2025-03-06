@@ -1,11 +1,14 @@
 # bpatch
-Application to generate a patch between two binary files without compression. The algorithm is based on the bash command DIFF.
-It is available a Python application to encode (generate the patch)and decode (rebuild the new firmware) options. The decode is based on a C code.
 
-**NOTE**: the os system command **diff** must be present, the python script work only on Linux 
+## overview
+Application to generate a patch between two binary files without compression. The differential algorithm is based on the bash command DIFF.
+It is available a Python application to encode (generate the patch) and decode (rebuild the new firmware) options. The decode is based on a C code.
 
-## How to configure
-It is available a script to build the C code for CPU and configure the Python script
+## prerequisite
+The application works only on Linux operating system
+
+## how to configure
+It is available a script to build and configure the Python script
 
     sh configure.sh
 
@@ -16,7 +19,7 @@ It is available a script to build the C code for CPU and configure the Python sc
     
     options:
 
-        -v         : verify che correctness of the patch
+		-v         : verify che correctness of the patch
 		-V         : verify che correctness of the txt patch
 		-t FILENAME: write the patch in txt format
 		-b FILENAME: write the patch in binary format
@@ -33,18 +36,6 @@ It is available a script to build the C code for CPU and configure the Python sc
 		-r SIZE: set the read buffer size
 		-p SIZE: set the patch buffer size
 
-
-
-## How to use C code
-- usage for CPU
-
-       ./bpatch <old_firmware> <patch> <new_firmware> <read_buffer_size> <patch_buffer_size>
-
-- usage for MCU
-
-    - copy *bpatch.c* and *bpatch.h*
-    - add definition of memory functions and log function
-    - remove define **TEST_PATCH**
 
 ## bpatch structure
 Are present two instructions: **CPY** to copy bytes from the old firmware, **ADD** to add new bytes. To save the bit to indicate the command in final patch it is assumed that the first instruction is a **CPY** then there is an alternance between **ADD** and **CPY**
@@ -162,6 +153,8 @@ In *bpatch.c*
 
 - define *write_header*: function to re-built header for correspondent bytes from the patch
 
+In the repository is present as example a custum header for SBSFU expansion for STM32, detailed [here](https://www.st.com/en/embedded-software/x-cube-sbsfu.html)
+
 
 ## CSV report format
 
@@ -176,3 +169,8 @@ Fields of CSV report:
 - **OVER_NBC**: number of bit necessary to NBC field compared to the total number new bytes in percentage
 - **OVER_NBA**: number of bit necessary to NBA field compared to the total number new bytes in percentage
 - **OVER_TOT**: number of bit necessary to NBD, NBC, NBA fields compared to the total number new bytes in percentage
+
+
+## Test environment
+
+It is present a **test** folder when the application can be tested and assessed on firmwares

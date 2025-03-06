@@ -6,8 +6,8 @@ import os
 from path_bpatch import path_patch_exec
 
 # enable custom header
-header_custom = True
-from header_sbsfu import header_fw_size, header_patch_size, header_lines, write_header_custom
+header_custom = False
+# from custom_header.header_sbsfu import header_fw_size, header_patch_size, header_lines, write_header_custom
 
 """ Custom Header definition start """
 if not header_custom:

@@ -642,7 +642,7 @@ if __name__ == '__main__':
             # check if the patched firmware is equal to the new firmware
             if os.system(f"diff patched_fw.tmp new_fw.tmp"):
                 print("The txt patch is not correct")
-                exit()
+                exit(2)
             else:
                 print("The txt patch is correct")
 
@@ -653,7 +653,7 @@ if __name__ == '__main__':
             # check if the patched firmware is equal to the new firmware
             if os.system(f"diff {path_patch_txt} patch_txt_new.tmp"):
                 print("The bin patch is not correct")
-                exit()
+                exit(3)
             else:
                 print("The bin patch is correct")
 
@@ -665,12 +665,15 @@ if __name__ == '__main__':
             # check if the patched firmware is equal to the new firmware
             if os.system(f"diff patched_fw.tmp {new_fw}"):
                 print("The patch is not correct")
+                exit(1)
             else:
                 print("The patch is correct")
 
         # remove temporary files
         for tmp in to_remove:
             os.remove(tmp)
+
+        exit(0)
 
     # decode function
     elif sys.argv[1] == 'decode':
@@ -708,7 +711,7 @@ if __name__ == '__main__':
             print("Error during parsing arguments")
 
         # apply the patch
-        os.system(f"{path_patch_exec} {old_fw} {p} {new_fw} {read_buffer} {patch_buffer} {verbose}")
+        exit(os.system(f"{path_patch_exec} {old_fw} {p} {new_fw} {read_buffer} {patch_buffer} {verbose}"))
 
     # help function
     elif sys.argv[1] == 'help':

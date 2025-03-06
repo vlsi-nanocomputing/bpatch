@@ -5,3 +5,6 @@ __pycache__/
 .idea/
 
 path_bpatch.py
+
+/test/*
+!/test/*.py

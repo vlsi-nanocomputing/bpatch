@@ -19,6 +19,7 @@ It is available a script to build and configure the Python script
     
     options:
 
+        -d         : use diff with option minimal to reduce the patch size"
 		-v         : verify che correctness of the patch
 		-V         : verify che correctness of the txt patch
 		-t FILENAME: write the patch in txt format

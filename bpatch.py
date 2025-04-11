@@ -554,6 +554,7 @@ if __name__ == '__main__':
         if len(sys.argv) < 5:
             print("Usage: python3 patch.py encode OLD_FW NEW_FW PATCH [OPTIONS]")
             print("Options:"
+                  "\n\t-d         : use diff with option minimal to reduce the patch size"
                   "\n\t-v         : verify che correctness of the patch"
                   "\n\t-V         : verify che correctness of the txt patch"
                   "\n\t-t FILENAME: write the patch in txt format"
@@ -570,6 +571,7 @@ if __name__ == '__main__':
         # default values
         verify = False
         verify_py = False
+        minimal = False
         path_patch_txt = ""
         path_patch_bin_txt = ""
         path_report_txt = ""
@@ -593,6 +595,9 @@ if __name__ == '__main__':
                     path_report_txt = sys.argv[i + 1]
                 elif sys.argv[i] == '-R':
                     path_report_csv = sys.argv[i + 1]
+                elif sys.argv[i] == '-d':
+                    minimal = True
+
 
         except IndexError:
             print("Error during parsing arguments")
@@ -614,7 +619,10 @@ if __name__ == '__main__':
         if header_custom:
             to_remove.extend(["old_fw_header.tmp", "new_fw_header.tmp"])
         # compute diff
-        os.system("diff old_fw.tmp new_fw.tmp > diff.tmp")
+        if minimal:
+            os.system("diff -d old_fw.tmp new_fw.tmp > diff.tmp")
+        else:
+            os.system("diff old_fw.tmp new_fw.tmp > diff.tmp")
         os.system("grep -E '^[0-9,]+[acd][0-9,]+$' diff.tmp > diff_c.tmp")
         os.system("grep '^>' diff.tmp | sed 's/^> //' > diff_a.tmp")
 

@@ -1,13 +1,13 @@
 # bpatch
 
-## overview
+## Overview
 Application to generate a patch between two binary files without compression. The differential algorithm is based on the bash command DIFF.
 It is available a Python application to encode (generate the patch) and decode (rebuild the new firmware) options. The decode is based on a C code.
 
-## prerequisite
+## Prerequisite
 The application works only on Linux operating system
 
-## how to configure
+## How to configure
 It is available a script to build and configure the Python script
 
     sh configure.sh
@@ -175,3 +175,13 @@ Fields of CSV report:
 ## Test environment
 
 It is present a **test** folder when the application can be tested and assessed on firmwares
+
+
+## Versioning
+We use M.m.p as a verdioning system.
+
+- M = Major
+- m = minor
+- p = patch
+
+There is always back compatibility among minor version and patches only fix possible bugs

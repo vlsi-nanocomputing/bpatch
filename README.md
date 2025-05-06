@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/978161231.svg)](https://doi.org/10.5281/zenodo.15348168)
+
 # bpatch
 
 ## Overview

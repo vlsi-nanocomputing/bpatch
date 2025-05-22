@@ -1,5 +1,5 @@
 # bpatch 
-[![DOI](https://zenodo.org/badge/978161231.svg)](https://doi.org/10.5281/zenodo.15348168)
+[![DOI](https://zenodo.org/badge/978161231.svg)](https://doi.org/10.5281/zenodo.15348169)
 [![arXiv](https://img.shields.io/static/v1?label=arXiv&message=1905.02477&color=informational&style=flat-square)](https://arxiv.org/abs/2505.13764)
 
 

@@ -1,6 +1,7 @@
+# bpatch 
 [![DOI](https://zenodo.org/badge/978161231.svg)](https://doi.org/10.5281/zenodo.15348168)
+[![arXiv](https://img.shields.io/static/v1?label=arXiv&message=1905.02477&color=informational&style=flat-square)](https://arxiv.org/abs/2505.13764)
 
-# bpatch
 
 ## Overview
 Application to generate a patch between two binary files without compression. The differential algorithm is based on the bash command DIFF.
@@ -178,6 +179,20 @@ Fields of CSV report:
 
 It is present a **test** folder when the application can be tested and assessed on firmwares
 
+## Reference
+
+Since **bpatch** is the result of an academic effort, we kindly ask that you acknowledge it by citing the following publication:
+```bibtex
+@misc{bpatch,
+      title={Incremental Firmware Update Over-the-Air for Low-Power IoT Devices over LoRaWAN}, 
+      author={Andrea De Simone and Giovanna Turvani and Fabrizio Riente},
+      year={2025},
+      eprint={2505.13764},
+      archivePrefix={arXiv},
+      primaryClass={eess.SY},
+      url={https://arxiv.org/abs/2505.13764}, 
+}
+```
 
 ## Versioning
 We use M.m.p as a verdioning system.

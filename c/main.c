@@ -10,9 +10,9 @@ Usage:
 
 // define struct for flash memory 
 typedef struct {
-    uint8_t old_fw_slot[172*1024];
-    uint8_t new_fw_slot[172*1024];
-    uint8_t patch_slot[172*1024];
+    uint8_t old_fw_slot[FW_SLOT_SIZE*1024];
+    uint8_t new_fw_slot[FW_SLOT_SIZE*1024];
+    uint8_t patch_slot[PATCH_SLOT_SIZE*1024];
 } memory_t;
 
 // addresses of the slots

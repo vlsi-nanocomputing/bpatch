@@ -15,6 +15,9 @@ typedef struct {
     uint8_t patch_slot[PATCH_SLOT_SIZE*1024];
 } memory_t;
 
+// instantiate memory
+memory_t flash;
+
 // addresses of the slots
 uint64_t START_PATCH_SLOT;
 uint64_t START_OLD_SLOT;  
@@ -31,9 +34,6 @@ int main(int argc, char *argv[]){
         printf("Usage: %s <old_firmware> <patch> <new_firmware> <read_buffer_size> <patch_buffer_size>\n", argv[0]);
         return 1;
     }
-
-    // instantiate memory
-    memory_t flash;
 
     // Initialize buffer sizes
     READ_BUFFER_SIZE = atoi(argv[4]);

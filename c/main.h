@@ -6,8 +6,8 @@
 #include "bpatch.h"
 
 // Define the size of the firmware slots in Kilobytes
-#define FW_SLOT_SIZE 2000
+#define FW_SLOT_SIZE 3000
 // Define the size of the patch slot in Kilobytes
-#define PATCH_SLOT_SIZE 1000
+#define PATCH_SLOT_SIZE 2000
 
 #endif

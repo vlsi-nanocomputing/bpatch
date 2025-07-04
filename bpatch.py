@@ -1,3 +1,15 @@
+#!/usr/bin/python3
+
+"""bpatch.py - Bit Patch Firmware Tool"""
+
+__author__ = "Andrea De Simone and Fabrizio Riente"
+__copyright__ = "Copyright 2025, Politecnico di Torino"
+__license__ = "Apache-2.0"
+__version__ = "1.0.1"
+__maintainer__ = "Andrea De Simone"
+__email__ = "andrea.desimone@polito.it, fabrizio.riente@polito.it"
+
+
 import binascii
 import re
 from math import log, ceil

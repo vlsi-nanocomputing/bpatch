@@ -1,10 +1,13 @@
+# build folder for C code
 build/
 
 .vscode/
 __pycache__/
 .idea/
 
+# private path of bpatch exectable
 path_bpatch.py
 
-/test/*
-!/test/*.py
+# test files
+/test/testin/*
+/test/testout/*

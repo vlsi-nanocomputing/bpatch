@@ -4,12 +4,32 @@ title: "Incremental firmware update over-the-air for low-power IoT devices over 
 authors:
   - family-names: "De Simone"
     given-names: "Andrea"
+    orcid: "0009-0007-2559-1336"
   - family-names: "Turvani"
     given-names: "Giovanna"
+    orcid: "0000-0002-8520-906X" 
   - family-names: "Riente"
     given-names: "Fabrizio"
+    orcid: "0000-0003-4147-1098"
 year: 2025
 doi: 10.1016/j.iot.2025.101772
 url: https://doi.org/10.1016/j.iot.2025.101772
 repository-code: "https://github.com/vlsi-nanocomputing/bpatch"
-license: Apache-2.0  # <-- o la licenza che vuoi usare
+license: Apache-2.0
+journal: "Internet of Things"
+issn: "2542-6605"
+journal-articleno: "101772"
+preferred-citation:
+  format: bibtex
+  citation: |
+    @article{DeSimone2025bpatch,
+      author = {De Simone, Andrea and Turvani, Giovanna and Riente, Fabrizio},
+      title = {Incremental firmware update over-the-air for low-power IoT devices over LoRaWAN},
+      journal = {Internet of Things},
+      year = {2025},
+      volume = {},
+      number = {},
+      pages = {},
+      article-number = {101772},
+      doi = {10.1016/j.iot.2025.101772}
+    }

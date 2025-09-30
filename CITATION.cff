@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the associated publication."
+title: "Incremental firmware update over-the-air for low-power IoT devices over LoRaWAN"
+authors:
+  - family-names: "De Simone"
+    given-names: "Andrea"
+  - family-names: "Turvani"
+    given-names: "Giovanna"
+  - family-names: "Riente"
+    given-names: "Fabrizio"
+year: 2025
+doi: 10.1016/j.iot.2025.101772
+url: https://doi.org/10.1016/j.iot.2025.101772
+repository-code: "https://github.com/vlsi-nanocomputing/bpatch"
+license: Apache-2.0  # <-- o la licenza che vuoi usare

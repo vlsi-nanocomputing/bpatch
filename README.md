@@ -184,14 +184,17 @@ It is present a **test** folder when the application can be tested and assessed 
 
 Since **bpatch** is the result of an academic effort, we kindly ask that you acknowledge it by citing the following publication:
 ```bibtex
-@misc{bpatch,
-      title={Incremental Firmware Update Over-the-Air for Low-Power IoT Devices over LoRaWAN}, 
-      author={Andrea De Simone and Giovanna Turvani and Fabrizio Riente},
-      year={2025},
-      eprint={2505.13764},
-      archivePrefix={arXiv},
-      primaryClass={eess.SY},
-      url={https://arxiv.org/abs/2505.13764}, 
+@article{bpatch,
+    title = {Incremental firmware update over-the-air for low-power IoT devices over LoRaWAN},
+    journal = {Internet of Things},
+    pages = {101772},
+    year = {2025},
+    issn = {2542-6605},
+    doi = {https://doi.org/10.1016/j.iot.2025.101772},
+    url = {https://www.sciencedirect.com/science/article/pii/S2542660525002860},
+    author = {Andrea {De Simone} and Giovanna Turvani and Fabrizio Riente},
+    keywords = {Internet of Things, LoRaWAN, FUOTA, Incremental update, Low-power},
+    abstract = {Remote firmware updates in Internet of Things (IoT) devices remain a major challenge due to the constraints of many IoT communication protocols. In particular, transmitting full firmware images over low-bandwidth links such as Long Range Wide Area Network (LoRaWAN) is often impractical. Existing techniques, such as firmware partitioning, can alleviate the problem but are often insufficient, especially for battery-powered devices where time and energy are critical constraints. Consequently, physical maintenance is still frequently required, which is costly and impractical in large-scale deployments. In this work, we introduce bpatch, a lightweight method for generating highly compact delta patches that enable on-device firmware reconstruction. The algorithm is explicitly designed for low-power devices, minimizing memory requirements and computational overhead during the update process. We evaluate bpatch on 173 firmware images across three architectures. Results show that it reduces update payloads by up to 39,000×for near-identical updates and by 9–18×for typical minor revisions, eliminating the need to transmit full firmware images. Experimental results further demonstrate significant time and energy savings, with performance comparable to more complex alternatives. bpatch is released as open-source and, although demonstrated on LoRaWAN, the approach is flexible and can be adapted to other IoT communication technologies.}
 }
 ```
 

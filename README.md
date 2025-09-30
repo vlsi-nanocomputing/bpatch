@@ -1,7 +1,7 @@
 # bpatch 
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/vlsi-nanocomputing/bpatch)](https://github.com/vlsi-nanocomputing/bpatch/releases/latest)
 [![DOI](https://zenodo.org/badge/978161231.svg)](https://doi.org/10.5281/zenodo.15348169)
-[![arXiv](https://img.shields.io/static/v1?label=arXiv&message=1905.02477&color=informational&style=flat-square)](https://arxiv.org/abs/2505.13764)
-[![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.iot.2025.101772-blue)](https://doi.org/10.1016/j.iot.2025.101772)
+[![DOI](https://img.shields.io/badge/IoT-10.1016%2Fj.iot.2025.101772-blue.svg?style=flat-square)](https://doi.org/10.1016/j.iot.2025.101772)
 
 
 ## Overview

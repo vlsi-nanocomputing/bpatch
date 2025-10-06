@@ -187,6 +187,7 @@ Since **bpatch** is the result of an academic effort, we kindly ask that you ack
 @article{bpatch,
     title = {Incremental firmware update over-the-air for low-power IoT devices over LoRaWAN},
     journal = {Internet of Things},
+    volume = {34},
     pages = {101772},
     year = {2025},
     issn = {2542-6605},
